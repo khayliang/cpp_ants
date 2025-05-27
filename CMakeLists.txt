@@ -30,6 +30,7 @@ enable_testing()
 file(GLOB_RECURSE TEST_SOURCES CONFIGURE_DEPENDS tests/*.cpp)
 
 add_executable(cpp_ants_tests ${TEST_SOURCES})
+
 target_link_libraries(cpp_ants_tests
     PRIVATE
         GTest::gtest
@@ -39,3 +40,15 @@ target_link_libraries(cpp_ants_tests
 
 include(GoogleTest)
 gtest_discover_tests(cpp_ants_tests)
+
+function(set_testing_mode target)
+    target_compile_definitions(${target} PRIVATE TESTING)
+endfunction()
+
+option(BUILD_TESTING "Enable tests" ON)
+
+if (BUILD_TESTING)
+    set_testing_mode(engine)
+    set_testing_mode(cpp_ants)
+    set_testing_mode(cpp_ants_tests)
+endif()

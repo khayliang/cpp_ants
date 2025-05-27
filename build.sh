@@ -1,21 +1,44 @@
 #!/bin/bash
 
-# Create build dir if it doesn't exist
-mkdir -p build
-cd build
+# Helper functions
+build() {
+  mkdir -p build
+  cd build
 
-# Configure (only if CMakeFiles don't exist)
-if [ ! -f "Makefile" ]; then
-  cmake ..
-fi
+  if [ ! -f "Makefile" ]; then
+    cmake ..
+  fi
 
-# Build project
-make -j$(nproc)
+  make -j$(nproc)
+}
 
-# Run the program if build was successful
-if [ $? -eq 0 ]; then
-  echo "Build successful. Running program..."
-  ./cpp_ants
-else
-  echo "Build failed."
-fi
+run_program() {
+  if [ -f "cpp_ants" ]; then
+    echo "Running main program..."
+    ./cpp_ants
+  else
+    echo "Executable 'cpp_ants' not found. Build first."
+    exit 1
+  fi
+}
+
+run_tests() {
+  echo "Running tests..."
+  ctest --output-on-failure -DBUILD_TESTING=ON
+}
+
+# Argument handling
+case "$1" in
+  test)
+    build && run_tests
+    ;;
+  run)
+    run_program
+    ;;
+  build)
+    build
+    ;;
+  "" | *)
+    build && run_program
+    ;;
+esac
