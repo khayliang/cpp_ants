@@ -1,8 +1,10 @@
+#include <engine/ecs/entity_manager.hpp>
+#include <iostream>
 #include <stdexcept>
 
-#include <engine/ecs/entity_manager.hpp>
-
-Entity EntityManager::createEntity() {
+Entity EntityManager::createEntity(Signature sig) {
+  if (sig.none()) throw std::invalid_argument("signature cannot be empty");
+  
   Entity entityToReturn;
   if (!freedEntities.empty()) {
     entityToReturn = freedEntities.front();
@@ -13,14 +15,23 @@ Entity EntityManager::createEntity() {
     entityToReturn = createdEntities;
     createdEntities += 1;
   }
+  signatures[entityToReturn] = sig;
   return entityToReturn;
 }
 
+void EntityManager::setSignature(Entity entity, Signature sig) {
+  if (sig.none()) throw std::invalid_argument("signature cannot be empty");
+  signatures[entity] = sig;
+}
+
+Signature EntityManager::getSignature(Entity entity) {
+  return signatures[entity];
+}
+
 void EntityManager::deleteEntity(Entity entity) {
-  if (signatures[entity].any()) {
-    signatures[entity].reset();
-    freedEntities.push(entity);
-  } else {
+  if (entity >= createdEntities || signatures[entity].none())
     throw std::invalid_argument("entity not created");
-  }
+
+  signatures[entity].reset();
+  freedEntities.push(entity);
 }

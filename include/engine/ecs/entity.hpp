@@ -1,5 +1,8 @@
 #include <cstdint>
-
 using Entity = std::uint32_t;
 
-constexpr Entity MAX_ENTITIES = 100000;
+#ifdef TESTING
+constexpr Entity MAX_ENTITIES = 20;
+#else
+constexpr Entity MAX_ENTITIES = 10000;
+#endif

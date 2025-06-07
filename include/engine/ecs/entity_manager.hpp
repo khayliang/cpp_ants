@@ -6,12 +6,10 @@
 
 class EntityManager {
  public:
-  EntityManager();
-  Entity createEntity();
   Entity createEntity(Signature);
   void deleteEntity(Entity);
   void setSignature(Entity, Signature);
-  void getSignature(Entity);
+  Signature getSignature(Entity);
 
  private:
   std::array<Signature, MAX_ENTITIES> signatures;

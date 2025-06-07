@@ -45,7 +45,7 @@ function(set_testing_mode target)
     target_compile_definitions(${target} PRIVATE TESTING)
 endfunction()
 
-option(BUILD_TESTING "Enable tests" ON)
+option(BUILD_TESTING "Enable tests" OFF)
 
 if (BUILD_TESTING)
     set_testing_mode(engine)
