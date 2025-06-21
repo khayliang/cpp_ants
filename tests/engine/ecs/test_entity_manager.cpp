@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
-
-#include <engine/ecs/entity_manager.hpp>
 #include <iostream>
+
+#include "engine/ecs/entity_manager.hpp"
 
 TEST(EntityManagerTest, CreateNewEntity) {
   EntityManager mg = EntityManager();

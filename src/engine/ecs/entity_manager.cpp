@@ -1,6 +1,7 @@
-#include <engine/ecs/entity_manager.hpp>
 #include <iostream>
 #include <stdexcept>
+
+#include "engine/ecs/entity_manager.hpp"
 
 Entity EntityManager::createEntity(Signature sig) {
   if (sig.none()) throw std::invalid_argument("signature cannot be empty");
@@ -11,7 +12,7 @@ Entity EntityManager::createEntity(Signature sig) {
     freedEntities.pop();
   } else {
     if (createdEntities == MAX_ENTITIES)
-      throw std::range_error("max entity limit reached");
+      throw std::out_of_range("max entity limit reached");
     entityToReturn = createdEntities;
     createdEntities += 1;
   }
