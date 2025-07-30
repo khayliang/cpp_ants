@@ -9,7 +9,7 @@ build() {
     cmake ..
   fi
 
-  make -j$(nproc)
+  make
 }
 
 run_program() {

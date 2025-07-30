@@ -4,13 +4,13 @@ project(cpp_ants)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
+find_package(SFML 3 COMPONENTS Graphics Window System REQUIRED)
 
 # build game engine library
 file(GLOB_RECURSE ENGINE_SOURCES CONFIGURE_DEPENDS src/engine/*.cpp)
 add_library(engine STATIC ${ENGINE_SOURCES})
 target_include_directories(engine PUBLIC ${CMAKE_SOURCE_DIR}/include)
-target_link_libraries(engine PUBLIC sfml-graphics sfml-window sfml-system)
+target_link_libraries(engine PUBLIC SFML::Graphics SFML::Window SFML::System)
 
 # build main executable
 add_executable(cpp_ants src/main.cpp)
