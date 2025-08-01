@@ -13,7 +13,7 @@ class IComponentArray {
 template <typename T>
 class ComponentArray : public IComponentArray {
  public:
-  const T& getData(Entity e) {
+  T& getData(Entity e) {
     if (entityToIdxMapping_.end() == entityToIdxMapping_.find(e)) {
       throw std::out_of_range("Entity does not exist. Nothing to read");
     }

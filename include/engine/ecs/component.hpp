@@ -1,5 +1,5 @@
 #include <cstdint>
 
-using ComponentType = std::uint8_t;
+using ComponentType = size_t;
 
 constexpr ComponentType MAX_COMPONENTS = 32;
